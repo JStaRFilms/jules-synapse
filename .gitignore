@@ -1,0 +1,30 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+*.env
+.env*.local
+
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations/*/*.sql
+
+# Uploads
+uploads/
+src/uploads/
+# If uploads are stored outside src, adjust path e.g. /project_root/uploads/
+# For this project, uploads/audio is created at project root via upload.middleware.js
+/uploads/audio/
+
+# IDE / OS specific
+.DS_Store
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Test Output
+coverage/
