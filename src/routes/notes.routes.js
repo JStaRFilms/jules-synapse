@@ -29,4 +29,8 @@ router.put('/:noteId/timestamps', authMiddleware, notesController.updateTimestam
 // router.get('/tags/all', authMiddleware, tagsController.getAllUserTags);
 // This is currently handled in getAllNotes with a query param, but a dedicated endpoint could exist.
 
+// --- AI-01 Routes (Nested under a specific note) ---
+const aiRoutes = require('./ai.routes'); // Import AI routes
+router.use('/:noteId/ai', aiRoutes); // Mount AI routes, they will get :noteId via mergeParams
+
 module.exports = router;

@@ -16,6 +16,7 @@ model User {
   username  String   @unique
   password  String
   notes     Note[]
+  folders   Folder[] // ORG-01: User's top-level folders
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -33,6 +34,31 @@ model Note {
   // Fields for AUDIO-01
   audioFilename   String?
   audioTimestamps Json?
+
+  // Field for AI-01
+  chatHistory     Json?    // Stores chat messages, e.g., [{"role": "user", "content": "Hi"}, {"role": "model", "content": "Hello"}]
+
+  // ORG-01: Link to a folder
+  folderId  String?
+  folder    Folder?  @relation(fields: [folderId], references: [id], onDelete: SetNull)
+}
+
+model Folder {
+  id        String   @id @default(cuid())
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  parentId  String?
+  parent    Folder?  @relation("FolderHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children  Folder[] @relation("FolderHierarchy")
+
+  notes     Note[]   // Notes directly within this folder
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, parentId, name])
 }
 
 model Tag {

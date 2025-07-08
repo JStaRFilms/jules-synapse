@@ -3,8 +3,10 @@ const cors = require('cors');
 const { PrismaClient } = require('@prisma/client');
 
 // Import routes
-const authRoutes = require('./routes/auth.routes'); // Will be created for AUTH-01
+const authRoutes = require('./routes/auth.routes');
 const notesRoutes = require('./routes/notes.routes');
+const tagsRoutes = require('./routes/tags.routes'); // Added for TAGS-01
+const folderRoutes = require('./routes/folder.routes'); // Added for ORG-01
 
 const prisma = new PrismaClient();
 const app = express();
@@ -23,6 +25,8 @@ app.get('/', (req, res) => {
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/notes', notesRoutes);
+app.use('/api/tags', tagsRoutes); // Added for TAGS-01
+app.use('/api/folders', folderRoutes); // Added for ORG-01
 
 
 // Global error handler (basic)
